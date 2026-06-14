@@ -1,7 +1,7 @@
 import streamlit as st
-from google import genai
+from groq import Groq
 
-client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+client = Groq(api_key=st.secrets["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"])
 
 SYSTEM_PROMPT = """You are a weather intelligence assistant for an India weather dashboard.
 The 5 cities tracked are: Kochi, Chennai, Bangalore, Delhi, Mumbai.
@@ -28,16 +28,14 @@ if prompt := st.chat_input("e.g. Which city has the worst air quality?"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    full_prompt = SYSTEM_PROMPT + "\n\n" + "\n".join(
-        [f"{m['role']}: {m['content']}" for m in st.session_state.messages]
-    )
-
     try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=full_prompt
+        response = client.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[{"role": "system", "content": SYSTEM_PROMPT}] + 
+                     [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages],
+            max_tokens=500
         )
-        reply = response.text
+        reply = response.choices[0].message.content
         st.session_state.messages.append({"role": "assistant", "content": reply})
         with st.chat_message("assistant"):
             st.markdown(reply)
