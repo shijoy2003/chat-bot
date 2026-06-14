@@ -30,8 +30,8 @@ if prompt := st.chat_input("e.g. Which city has the worst air quality?"):
 
     try:
         response = client.chat.completions.create(
-            model="llama3-8b-8192",
-            messages=[{"role": "system", "content": SYSTEM_PROMPT}] + 
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "system", "content": SYSTEM_PROMPT}] +
                      [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages],
             max_tokens=500
         )
