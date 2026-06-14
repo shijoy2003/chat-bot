@@ -1,7 +1,7 @@
 import streamlit as st
 from groq import Groq
 
-client = Groq(api_key=st.secrets["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"])
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 SYSTEM_PROMPT = """You are a weather intelligence assistant for an India weather dashboard.
 The 5 cities tracked are: Kochi, Chennai, Bangalore, Delhi, Mumbai.
