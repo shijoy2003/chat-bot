@@ -32,12 +32,14 @@ if prompt := st.chat_input("e.g. Which city has the worst air quality?"):
         [f"{m['role']}: {m['content']}" for m in st.session_state.messages]
     )
 
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=full_prompt
-    )
-    reply = response.text
-
-    st.session_state.messages.append({"role": "assistant", "content": reply})
-    with st.chat_message("assistant"):
-        st.markdown(reply)
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=full_prompt
+        )
+        reply = response.text
+        st.session_state.messages.append({"role": "assistant", "content": reply})
+        with st.chat_message("assistant"):
+            st.markdown(reply)
+    except Exception as e:
+        st.error(f"Error: {str(e)}")
