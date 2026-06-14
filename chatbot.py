@@ -1,7 +1,7 @@
 import streamlit as st
 from google import genai
 
-client = genai.Client(api_key=st.secrets["AQ.Ab8RN6LFgwep76-5_Iy2tf8ViTy6LpI244P5zQrAnXKLKPLls"])
+client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 SYSTEM_PROMPT = """You are a weather intelligence assistant for an India weather dashboard.
 The 5 cities tracked are: Kochi, Chennai, Bangalore, Delhi, Mumbai.
